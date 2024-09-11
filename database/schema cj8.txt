@@ -1,0 +1,52 @@
+~/cifrasjump-8$ sqlite3 database/db.db
+SQLite version 3.35.5 2021-04-19 18:32:05
+Enter ".help" for usage hints.
+sqlite> .mode table
+sqlite> SELECT * FROM tags;
++----+-------------+-------+--------+---------------------+---------------------+
+| id | id_tagtypes | match |  tag   |     created_at      |     updated_at      |
++----+-------------+-------+--------+---------------------+---------------------+
+| 1  | 1           | °     | |_d000 | 2024-09-11 18:07:47 | 2024-09-11 18:07:47 |
+| 2  | 1           | º     | |_d001 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 3  | 1           | dim   | |_d002 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 4  | 2           | Maj7  | |_m000 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 5  | 2           | maj7  | |_m001 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 6  | 2           | 7M    | |_m002 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 7  | 3           | sus2  | |_s000 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 8  | 3           | sus9  | |_s001 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 9  | 3           | sus4  | |_s002 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 10 | 3           | sus11 | |_s003 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 11 | 4           | add4  | |_a000 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 12 | 4           | add11 | |_a001 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 13 | 4           | add2  | |_a002 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 14 | 4           | add9  | |_a003 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 15 | 5           | aug2  | |_g000 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 16 | 5           | aug9  | |_g001 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 17 | 5           | aug4  | |_g002 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
+| 18 | 5           | aug11 | |_g003 | 2024-09-11 18:07:48 | 2024-09-11 18:07:48 |
++----+-------------+-------+--------+---------------------+---------------------+
+sqlite> .schema
+CREATE TABLE IF NOT EXISTS "migrations" ("id" integer not null primary key autoincrement, "migration" varchar not null, "batch" integer not null);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE IF NOT EXISTS "users" ("id" integer not null primary key autoincrement, "name" varchar not null, "email" varchar not null, "email_verified_at" datetime, "password" varchar not null, "remember_token" varchar, "created_at" datetime, "updated_at" datetime);
+CREATE UNIQUE INDEX "users_email_unique" on "users" ("email");
+CREATE TABLE IF NOT EXISTS "password_resets" ("email" varchar not null, "token" varchar not null, "created_at" datetime);
+CREATE INDEX "password_resets_email_index" on "password_resets" ("email");
+CREATE TABLE IF NOT EXISTS "failed_jobs" ("id" integer not null primary key autoincrement, "uuid" varchar not null, "connection" text not null, "queue" text not null, "payload" text not null, "exception" text not null, "failed_at" datetime default CURRENT_TIMESTAMP not null);
+CREATE UNIQUE INDEX "failed_jobs_uuid_unique" on "failed_jobs" ("uuid");
+CREATE TABLE IF NOT EXISTS "personal_access_tokens" ("id" integer not null primary key autoincrement, "tokenable_type" varchar not null, "tokenable_id" integer not null, "name" varchar not null, "token" varchar not null, "abilities" text, "last_used_at" datetime, "created_at" datetime, "updated_at" datetime);
+CREATE INDEX "personal_access_tokens_tokenable_type_tokenable_id_index" on "personal_access_tokens" ("tokenable_type", "tokenable_id");
+CREATE UNIQUE INDEX "personal_access_tokens_token_unique" on "personal_access_tokens" ("token");
+CREATE TABLE IF NOT EXISTS "tagtypes" ("id" integer not null primary key autoincrement, "type_name" varchar not null, "type_description" varchar not null, "created_at" datetime, "updated_at" datetime);
+CREATE TABLE IF NOT EXISTS "tags" ("id" integer not null primary key autoincrement, "id_tagtypes" integer not null, "match" varchar not null, "tag" varchar not null, "created_at" datetime, "updated_at" datetime, foreign key("id_tagtypes") references "tagtypes"("id"));
+sqlite> SELECT * FROM tagtypes;
++----+-----------+------------------------------------+---------------------+---------------------+
+| id | type_name |          type_description          |     created_at      |     updated_at      |
++----+-----------+------------------------------------+---------------------+---------------------+
+| 1  | dim       | diminutos                          | 2024-09-11 18:07:07 | 2024-09-11 18:07:07 |
+| 2  | maj       | sétima maior                       | 2024-09-11 18:07:07 | 2024-09-11 18:07:07 |
+| 3  | sus       | suspensos na segunda ou quarta     | 2024-09-11 18:07:07 | 2024-09-11 18:07:07 |
+| 4  | add       | na segunda ou quarta               | 2024-09-11 18:07:07 | 2024-09-11 18:07:07 |
+| 5  | aug       | aumentados na segunda ou na quarta | 2024-09-11 18:07:07 | 2024-09-11 18:07:07 |
++----+-----------+------------------------------------+---------------------+---------------------+
+sqlite> 
