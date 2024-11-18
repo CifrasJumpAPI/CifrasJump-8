@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Aplic\Main;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ClientMainRequest;
+//use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
@@ -11,7 +12,7 @@ class MainController extends Controller
   private int    $tuning_input = 0;
   
   
-  public function main(Request $request)
+  public function main(ClientMainRequest $request)
   {
     $this->text_input   = (string)$request['text'  ];
     $this->tuning_input =    (int)$request['tuning'];

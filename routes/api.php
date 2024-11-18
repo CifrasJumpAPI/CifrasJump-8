@@ -14,7 +14,15 @@ use App\Http\Controllers\Aplic\Main\MainController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 
+*/
 
+
+//Apenas para 1° teste de conectividade entre dispositivos.
+Route::get('/teste', function(){
+  return response()->json(['msg'=>'Seja Bem Vindo Ao CIFRAS JUMP API!']);
+});
+
+/*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
