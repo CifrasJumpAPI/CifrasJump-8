@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Aplic\Main;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientMainRequest;
+use App\Http\Controllers\Aplic\Analise\AnaliseController;
 //use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -14,13 +15,13 @@ class MainController extends Controller
   
   public function main(ClientMainRequest $request)
   {
-    $this->text_input   = (string)$request['text'  ];
+    $this->text_input   = (string)$request['text'  ].' ';
     $this->tuning_input =    (int)$request['tuning'];
     return response()->json($this->coordinate());
   }
 
   public function coordinate()
   {
-    return array($this->text_input, $this->tuning_input);
+    return AnaliseController::detectarCifras($this->text_input);
   }
 }
